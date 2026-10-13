@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="A simple Controleo3 profile editor with live inline syntax checks."><title>Controleo3 editor</title></head>
+<body>
+  <main>
+    <header><div><p class="eyebrow">CONTROLEO3</p><nav aria-label="Pages"><a aria-current="page" href="./">Program</a><a href="./calibrate.html">Calibrate simulation</a></nav><h1>Profile editor</h1><p class="intro">Paste your program. Fix errors as you type.</p></div><a href="https://github.com/engineertype/Controleo3" target="_blank" rel="noreferrer">Firmware ↗</a></header>
+    <section class="workspace" aria-label="Program editor">
+      <div class="toolbar"><span id="status" role="status" aria-live="polite">Ready</span><div><button id="copy">Copy</button><button id="download">Download .TXT</button></div></div>
+      <div id="editor"></div>
+    </section>
+    <p class="note">Checks run in your browser. Your draft stays on this device. Syntax checks do not verify an oven’s behavior.</p>
+    <section class="plots" aria-labelledby="plots-heading">
+      <h2 id="plots-heading">Temperature</h2>
+      <article class="plot-card"><div class="chart-legend"><span><i class="legend ideal"></i>Ideal</span><span><i class="legend estimated"></i>Simulation</span></div><div id="temperature-plot"></div></article>
+      <p id="plot-status" role="status" aria-live="polite"></p>
+      <form id="thermal-settings">
+        <label>Heating speed (°C/min)<input name="heatingRate" type="number" min="0.000001" step="any" required></label>
+        <label>Cooling half-time (min)<input name="coolingHalfTime" type="number" min="0.000001" step="any" required></label>
+      </form>
+      <p id="calibration-summary" class="settings-storage"></p>
+      <p id="settings-storage" class="settings-storage" role="status"></p>
+      <ul id="plot-notes"></ul>
+
+    </section>
+    <details id="syntax-reference"><summary>Syntax quick reference</summary>
+      <p>Start with <code>Controleo3</code>, then <code>name "My profile"</code>. Use one command per line. Commands are case insensitive; comments start with <code>#</code> or <code>//</code>. Strings use double quotes.</p>
+      <h3>Unit catalog</h3>
+      <table class="unit-catalog"><thead><tr><th scope="col">Value</th><th scope="col">Unit</th><th scope="col">Example</th></tr></thead><tbody>
+        <tr><td>Temperature</td><td>Degrees Celsius (°C)</td><td><code>maintain 150C for 60 seconds</code></td></tr>
+        <tr><td>Temperature difference</td><td>Degrees Celsius (°C)</td><td><code>deviation 20C</code></td></tr>
+        <tr><td>Duration / timer</td><td>Seconds</td><td><code>wait for 120 seconds</code></td></tr>
+        <tr><td>Heater output</td><td>Percent, 0–100%</td><td><code>element duty cycle 80/60/0</code></td></tr>
+        <tr><td>Door opening</td><td>Percent, 0–100%, then seconds</td><td><code>door percentage 50% over 2 seconds</code></td></tr>
+        <tr><td>Heater bias</td><td>Relative weights</td><td><code>bias 3/2/1</code></td></tr>
+      </tbody></table>
+      <p>Three heater values always mean <strong>bottom / top / boost</strong>. Numbers must be whole and non-negative, up to 65535.</p>
+      <p><strong>1 minute = 60 seconds; 1 hour = 3600 seconds.</strong> Unit labels are optional and do not convert values. Write <code>120 seconds</code> for two minutes; temperatures always use Celsius.</p>
+      <h3>Commands and argument order</h3><div id="reference"></div>
+    </details>
+    <p id="feedback" role="status" aria-live="polite"></p>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

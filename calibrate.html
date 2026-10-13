@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Calibrate simulation · Controleo3</title></head>
+<body><main>
+  <header><div><p class="eyebrow">CONTROLEO3</p><nav aria-label="Pages"><a href="./">Program</a><a aria-current="page" href="./calibrate.html">Calibrate simulation</a></nav><h1>Calibrate simulation</h1></div></header>
+  <p class="calibration-intro">This page learns how fast your oven heats and cools from a recorded log. The best calibration cycle is one uninterrupted full-power warmup followed by cooling with the heater off, keeping the door and fans unchanged.</p>
+  <p class="calibration-intro">Select one warmup-and-cooldown section, or just a heater-off cooldown. For a long cycle, choose a suggestion and zoom in to adjust it. Skip programmed ramps and holds. Room temperature is assumed to be 25°C.</p>
+  <div class="calibration-actions"><button id="import-log" type="button">Upload CSV log</button><input id="log-file" type="file" accept=".csv,text/csv" hidden><span id="log-name"></span></div>
+  <p id="log-status" role="status" aria-live="polite">Upload a log to get started.</p>
+  <section id="calibration-workspace" hidden>
+    <label class="suggestion-picker" for="section-suggestion">Suggested section<select id="section-suggestion"></select></label>
+    <p class="selection-hint">Drag on the plot to mark a section.</p>
+    <p id="selection-readout" role="status" aria-live="polite"></p>
+    <article class="plot-card"><div class="chart-legend"><span><i class="legend measured"></i>Logged temperature</span><span><i class="legend cooling"></i>Calibration section</span></div><div id="calibration-plot"></div></article>
+    <div class="zoom-tools"><button id="zoom-selection" type="button">Zoom to selection</button><button id="show-full-log" type="button">Show full log</button><button id="view-earlier" type="button">← Earlier</button><button id="view-later" type="button">Later →</button></div>
+    <div id="log-overview" aria-label="Overview of the entire log"></div>
+    <p id="view-readout" class="selection-hint"></p>
+    <div class="selection-sliders">
+      <label for="selection-start">Selection start</label><div class="slider-row"><button type="button" data-adjust="start:-10" aria-label="Move selection start ten seconds earlier">−10s</button><input id="selection-start" type="range" step="1"><button type="button" data-adjust="start:10" aria-label="Move selection start ten seconds later">+10s</button></div>
+      <label for="selection-end">Selection end</label><div class="slider-row"><button type="button" data-adjust="end:-10" aria-label="Move selection end ten seconds earlier">−10s</button><input id="selection-end" type="range" step="1"><button type="button" data-adjust="end:10" aria-label="Move selection end ten seconds later">+10s</button></div>
+    </div>
+    <form id="calibration-form">
+      <fieldset><legend>Calibration section</legend><div class="range-inputs"><label>From (min)<input name="from" type="number" min="0" step="any"></label><label>To (min)<input name="to" type="number" min="0" step="any"></label></div></fieldset>
+      <button id="use-calibration" type="submit">Use calibration</button>
+    </form>
+  </section>
+  <p id="fit-summary" role="status" aria-live="polite"></p>
+  <a class="back-link" href="./">Back to program →</a>
+</main><script type="module" src="/src/calibrate-page.js"></script></body>
+</html>
